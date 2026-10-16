@@ -146,6 +146,18 @@ th small{display:block;font-size:.8rem;font-weight:400;letter-spacing:0;text-tra
 .plans figcaption{padding:14px 18px;font-size:.88rem;color:var(--ink);font-weight:500;border-top:1px solid var(--line)}
 .plans figcaption span{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
 
+/* lightbox */
+.lightbox{margin:auto;border:0;padding:0;background:transparent;max-width:min(1200px,94vw);width:100%;overflow:visible}
+.lightbox::backdrop{background:rgba(43,45,40,.88)}
+.lightbox img{width:100%;height:auto;max-height:76vh;object-fit:contain;border-radius:var(--radius);background:var(--cream)}
+.lightbox p{color:var(--cream);text-align:center;margin-top:14px;font-size:.92rem}
+.lb-btn{position:absolute;background:var(--cream);color:var(--ink);border:0;border-radius:999px;width:44px;height:44px;font:400 1.4rem/1 "Poppins",sans-serif;cursor:pointer;display:grid;place-items:center}
+.lb-btn:hover{background:var(--sand)}
+.lb-close{top:-56px;right:0}
+.lb-prev{left:-60px;top:50%;transform:translateY(-50%)}
+.lb-next{right:-60px;top:50%;transform:translateY(-50%)}
+@media (max-width:1320px){.lb-prev{left:8px}.lb-next{right:8px}}
+
 /* uses */
 .uses-section{background:var(--white)}
 .uses{display:grid;grid-template-columns:1fr 1.2fr;gap:80px}
@@ -522,6 +534,14 @@ footer a:hover{color:var(--sand)}
   </section>
 </main>
 
+<dialog class="lightbox" id="lightbox" aria-label="Floor plan">
+  <button class="lb-btn lb-close" type="button" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous plan">&#8249;</button>
+  <img src="" alt="">
+  <button class="lb-btn lb-next" type="button" aria-label="Next plan">&#8250;</button>
+  <p></p>
+</dialog>
+
 <footer>
   <div class="wrap">
     <div class="foot">
@@ -552,6 +572,29 @@ footer a:hover{color:var(--sand)}
         el.classList.add('reveal');
         io.observe(el);
       });
+  }
+
+  // floor plan lightbox (links still open the image if <dialog> is unsupported)
+  const lb = document.getElementById('lightbox');
+  const plans = [...document.querySelectorAll('.plans a')];
+  let cur = 0;
+  const show = i => {
+    cur = (i + plans.length) % plans.length;
+    const img = plans[cur].querySelector('img');
+    lb.querySelector('img').src = plans[cur].href;
+    lb.querySelector('img').alt = img.alt;
+    lb.querySelector('p').textContent = plans[cur].querySelector('figcaption').firstChild.textContent;
+  };
+  if (lb.showModal) {
+    plans.forEach((a, i) => a.addEventListener('click', e => { e.preventDefault(); show(i); lb.showModal(); }));
+    lb.querySelector('.lb-close').onclick = () => lb.close();
+    lb.querySelector('.lb-prev').onclick = () => show(cur - 1);
+    lb.querySelector('.lb-next').onclick = () => show(cur + 1);
+    lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+    lb.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
   }
 
   // no past dates in the booking form (field stays empty until picked)
