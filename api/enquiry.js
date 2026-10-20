@@ -21,7 +21,9 @@ module.exports = async (req, res) => {
 
   // honeypot: real people never see this field
   if (body.website) return back(res, 'sent');
-  if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return back(res, 'error');
+  // every field is required except the message
+  if (FIELDS.some(([k]) => k !== 'message' && !data[k])) return back(res, 'error');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return back(res, 'error');
 
   const rows = FIELDS.filter(([k]) => data[k])
     .map(([k, label]) => `<tr><td style="padding:6px 16px 6px 0;color:#6b6d68;vertical-align:top">${label}</td><td style="padding:6px 0;color:#2b2d28;white-space:pre-wrap">${esc(data[k])}</td></tr>`)

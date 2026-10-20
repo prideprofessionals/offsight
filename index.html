@@ -345,6 +345,8 @@ label{display:block;font-size:.85rem;color:var(--ink);font-weight:500;margin-bot
 input,select,textarea{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--cream);border:1px solid transparent;border-radius:10px;padding:13px 15px;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{outline:0;border-color:var(--ink)}
 textarea{min-height:120px;resize:vertical}
+select:invalid{color:var(--muted)}
+.optional{font-weight:400;color:var(--muted)}
 form .btn{justify-self:start;align-self:center}
 .form-legal{font-size:.8rem;align-self:center}
 .hp{position:absolute;left:-9999px}
@@ -612,12 +614,13 @@ footer a:hover{color:var(--sand)}
         <p class="form-status full" id="form-status" role="status" hidden></p>
         <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
         <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
-        <div><label for="company">Company</label><input id="company" name="company" autocomplete="organization"></div>
+        <div><label for="company">Company</label><input id="company" name="company" autocomplete="organization" required></div>
         <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-        <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
         <div>
           <label for="space">Space</label>
           <select id="space" name="space" required>
+            <option value="" disabled selected>Select a space</option>
             <option value="Boardroom">The Boardroom (up to 10)</option>
             <option value="Entire space">The Entire Space (up to 22 seated)</option>
             <option value="Not sure">Not sure yet</option>
@@ -625,7 +628,8 @@ footer a:hover{color:var(--sand)}
         </div>
         <div>
           <label for="layout">Layout</label>
-          <select id="layout" name="layout">
+          <select id="layout" name="layout" required>
+            <option value="" disabled selected>Select a layout</option>
             <option>Boardroom</option>
             <option>Laptop station</option>
             <option>Monitor station</option>
@@ -639,7 +643,8 @@ footer a:hover{color:var(--sand)}
         <div><label for="date">Preferred date</label><input id="date" name="date" type="date" value="" required></div>
         <div>
           <label for="duration">Duration</label>
-          <select id="duration" name="duration">
+          <select id="duration" name="duration" required>
+            <option value="" disabled selected>Select a duration</option>
             <option>Half day (8am to 12pm)</option>
             <option>Half day (1pm to 5pm)</option>
             <option>Full day (8am to 5pm)</option>
@@ -649,13 +654,14 @@ footer a:hover{color:var(--sand)}
         </div>
         <div>
           <label for="catering">Catering</label>
-          <select id="catering" name="catering">
+          <select id="catering" name="catering" required>
+            <option value="" disabled selected>Select an option</option>
             <option>Yes, please quote catering</option>
             <option>No, we'll sort our own</option>
             <option>Not sure yet</option>
           </select>
         </div>
-        <div class="full"><label for="message">Tell us about your event</label><textarea id="message" name="message" placeholder="Type of session, AV needs, dietary requirements, anything else"></textarea></div>
+        <div class="full"><label for="message">Tell us about your event <span class="optional">(optional)</span></label><textarea id="message" name="message" placeholder="Type of session, AV needs, dietary requirements, anything else"></textarea></div>
         <button class="btn" type="submit">Send enquiry</button>
         <p class="form-legal">We'll use your details to respond to your enquiry. See our <a href="/privacy">Privacy Policy</a> and <a href="/booking-terms">Booking Terms</a>.</p>
       </form>
