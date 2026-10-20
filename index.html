@@ -201,6 +201,9 @@ input,select,textarea{width:100%;font:inherit;font-size:.95rem;color:var(--ink);
 input:focus,select:focus,textarea:focus{outline:0;border-color:var(--ink)}
 textarea{min-height:120px;resize:vertical}
 form .btn{justify-self:start}
+.hp{position:absolute;left:-9999px}
+.form-status{padding:14px 18px;border-radius:10px;background:var(--sand);color:var(--ink);font-size:.95rem}
+.form-status.error{background:#f6ddd6;color:var(--terracotta-dark)}
 
 /* faq */
 .faq{background:var(--sand)}
@@ -457,9 +460,10 @@ footer a:hover{color:var(--sand)}
         </ul>
       </div>
 
-      <!-- TODO: replace YOUR_FORM_ID with a Formspree form ID (formspree.io), or point action at your own handler -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="hidden" name="_subject" value="New booking enquiry – offsight.">
+      <!-- posts to api/enquiry.js, which emails bookings@offsight.au via Resend -->
+      <form action="/api/enquiry" method="POST">
+        <p class="form-status full" id="form-status" role="status" hidden></p>
+        <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
         <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
         <div><label for="company">Company</label><input id="company" name="company" autocomplete="organization"></div>
         <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
@@ -595,6 +599,16 @@ footer a:hover{color:var(--sand)}
       if (e.key === 'ArrowLeft') show(cur - 1);
       if (e.key === 'ArrowRight') show(cur + 1);
     });
+  }
+
+  // enquiry result message after the form redirects back
+  const sent = new URLSearchParams(location.search).get('enquiry');
+  if (sent) {
+    const el = document.getElementById('form-status');
+    el.hidden = false;
+    if (sent === 'sent') el.textContent = "Thanks, your enquiry has been sent. We'll come back to you within one business day.";
+    else { el.classList.add('error'); el.textContent = 'Sorry, something went wrong sending your enquiry. Please try again or email bookings@offsight.au.'; }
+    history.replaceState(null, '', location.pathname + '#book');
   }
 
   // no past dates in the booking form (field stays empty until picked)
