@@ -1,7 +1,7 @@
 // Booking enquiry form handler: emails the enquiry to the bookings inbox via Resend.
-// Needs RESEND_API_KEY in Vercel env vars, and offsight.au verified in Resend.
+// Needs RESEND_API_KEY in Vercel env vars; sends from notify.offsight.au (verified in Resend).
 const TO = process.env.ENQUIRY_TO || 'bookings@offsight.au';
-const FROM = process.env.ENQUIRY_FROM || 'offsight. enquiries <enquiries@offsight.au>';
+const FROM = process.env.ENQUIRY_FROM || 'offsight. enquiries <enquiries@notify.offsight.au>';
 
 const FIELDS = [
   ['name', 'Name'], ['company', 'Company'], ['email', 'Email'], ['phone', 'Phone'],
