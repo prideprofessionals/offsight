@@ -200,7 +200,8 @@ label{display:block;font-size:.85rem;color:var(--ink);font-weight:500;margin-bot
 input,select,textarea{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--cream);border:1px solid transparent;border-radius:10px;padding:13px 15px;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{outline:0;border-color:var(--ink)}
 textarea{min-height:120px;resize:vertical}
-form .btn{justify-self:start}
+form .btn{justify-self:start;align-self:center}
+.form-legal{font-size:.8rem;align-self:center}
 .hp{position:absolute;left:-9999px}
 .form-status{padding:14px 18px;border-radius:10px;background:var(--sand);color:var(--ink);font-size:.95rem}
 .form-status.error{background:#f6ddd6;color:var(--terracotta-dark)}
@@ -223,7 +224,8 @@ footer{background:var(--ink);color:#a9a59c;padding:70px 0 40px;font-size:.9rem}
 footer img{width:150px;margin-bottom:18px}
 footer a{text-decoration:none}
 footer a:hover{color:var(--sand)}
-.legal{margin-top:50px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.8rem}
+.legal{margin-top:50px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px}
+.legal-links{display:flex;flex-wrap:wrap;gap:8px 24px}
 
 /* motion */
 @keyframes settle{from{transform:scale(1.08)}to{transform:none}}
@@ -510,6 +512,7 @@ footer a:hover{color:var(--sand)}
         </div>
         <div class="full"><label for="message">Tell us about your event</label><textarea id="message" name="message" placeholder="Type of session, AV needs, dietary requirements, anything else"></textarea></div>
         <button class="btn" type="submit">Send enquiry</button>
+        <p class="form-legal">We'll use your details to respond to your enquiry. See our <a href="privacy.html">Privacy Policy</a> and <a href="booking-terms.html">Booking Terms</a>.</p>
       </form>
     </div>
   </section>
@@ -532,7 +535,7 @@ footer a:hover{color:var(--sand)}
         <details><summary>What time can we get in?</summary><p>Half days run 8am to 12pm or 1pm to 5pm, full days 8am to 5pm, and evenings 5.30pm to 9.30pm. If you need extra time to set up, let us know when you enquire.</p></details>
         <details><summary>How do we get in? Will someone be there?</summary><p>You'll receive a door PIN before your booking so you can let yourself in, and a contact number if you need anything on the day.</p></details>
         <details><summary>Is there parking?</summary><p>There's free 3-hour street parking on Rokeby Road and paid parking on nearby streets, plus public car parks within a short walk.</p></details>
-        <details><summary>What's your cancellation policy?</summary><p>A 50% deposit confirms your booking. Cancel more than 14 days out for a full refund. Cancellations within 14 days forfeit the deposit, and within 48 hours the full fee applies.</p></details>
+        <details><summary>What's your cancellation policy?</summary><p>A 50% deposit confirms your booking. Cancel more than 14 days out for a full refund. Cancellations within 14 days forfeit the deposit, and within 48 hours the full fee applies. See our <a href="booking-terms.html">Booking Terms &amp; Conditions</a> for details.</p></details>
       </div>
     </div>
   </section>
@@ -558,7 +561,7 @@ footer a:hover{color:var(--sand)}
         <p><a href="mailto:bookings@offsight.au">bookings@offsight.au</a></p>
       </div>
     </div>
-    <p class="legal">© <span id="y">2026</span> offsight. All rights reserved.</p>
+    <p class="legal"><span>© <span id="y">2026</span> offsight. All rights reserved.</span><span class="legal-links"><a href="website-terms.html">Website Terms</a><a href="privacy.html">Privacy Policy</a><a href="booking-terms.html">Booking Terms</a></span></p>
   </div>
 </footer>
 
