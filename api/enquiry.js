@@ -12,8 +12,16 @@ const FIELDS = [
 const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const back = (res, status) => { res.writeHead(303, { Location: `/?enquiry=${status}#book` }); res.end(); };
 
+// only accept posts from our own pages (browsers always send Origin on form posts)
+const ALLOWED_HOSTS = ['offsight.au', 'www.offsight.au', 'offsight-inky.vercel.app'];
+const fromOurSite = req => {
+  const src = req.headers?.origin || req.headers?.referer;
+  if (!src) return true; // non-browser clients; honeypot and validation still apply
+  try { return ALLOWED_HOSTS.includes(new URL(src).hostname); } catch { return false; }
+};
+
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') return back(res, 'error');
+  if (req.method !== 'POST' || !fromOurSite(req)) return back(res, 'error');
 
   const body = req.body || {};
   const data = {};
